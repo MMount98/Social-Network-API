@@ -1,12 +1,16 @@
 const { Schema, model } = require("mongoose");
-const Reactions = require("");
+const Reactions = require("./Reaction");
 
 //Schema Thought
 const thoughtSchema = new Schema(
   {
-    thoughText: { type: String, minLength: 1, maxLength: 280, required: true },
-  },
-  {
+    thoughText: {
+      type: String,
+      minLength: 1,
+      maxLength: 280,
+      required: true,
+    },
+
     createdAt: {
       type: Date,
       default: Date.now,
@@ -14,11 +18,12 @@ const thoughtSchema = new Schema(
         if (date) return date.toString();
       },
     },
-  },
-  {
-    username: { type: String, required: true },
-  },
-  {
+
+    username: {
+      type: String,
+      required: true,
+    },
+
     reactions: [Reactions],
   },
   {
