@@ -23,7 +23,7 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
   updateUser(req, res) {
-    User.findByIdAndUpdate(
+    User.findOneAndUpdate(
       { _id: req.params.userId },
       { $set: req.body },
       { runValidators: true, new: true }
@@ -32,6 +32,20 @@ module.exports = {
         !user
           ? res.status(404).json({ message: "No User Found" })
           : res.json(user)
+      )
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  },
+  deleteUser(req, res) {
+    //deletes the User
+    User.findOneAndRemove({ _id: req.params.userId })
+      .then((user) =>
+        !user
+          ? res.status(404).json({ message: "No User Found" })
+          : //deletes the thoughts
+            res.json({ message: "User Was Deleted" })
       )
       .catch((err) => {
         console.log(err);
