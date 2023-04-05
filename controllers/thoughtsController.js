@@ -1,4 +1,4 @@
-const { Thought, User } = require("../models");
+const { Thought, User, Reaction } = require("../models");
 
 module.exports = {
   //respond with all Thoughts
@@ -54,11 +54,40 @@ module.exports = {
   },
   //Delete Thought by Id
   deleteThought(req, res) {
-    Thought.findOneAndDelete({ _id: req.params.thoughtId }).then((thought) =>
-      !thought
-        ? res.status(404).res.json({ message: "Thought not Found" })
-        : res.json({ message: "Thought was Deleted!" })
+    Thought.findOneAndDelete({ _id: req.params.thoughtId })
+      .then((thought) =>
+        !thought
+          ? res.status(404).res.json({ message: "Thought not Found" })
+          : res.json({ message: "Thought was Deleted!" })
+      )
+      .catch((err) => res.json(err));
+  },
+  //Adds Reaction To Thought by Id
+  addReaction(req, res) {
+    Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId },
+      { $addToSet: { reactions: req.body } }, //reactionBody (matches schema key)
+      { runValidators: true, new: true }
     )
-    .catch((err) => res.json(err))
+      .then((thought) =>
+        !thought
+          ? res.status(404).json({ message: "Thought not found" })
+          : res.json(thought)
+      )
+      .catch((err) => res.json(err));
+  },
+  //removes Reaction from Thought
+  removeReaction(req, res) {
+    Thought.findByIdAndUpdate(
+      { _id: req.params.thoughtId },
+      { $pull: { reactions: { reactionId: req.body.reactionId } } },
+      { runValidators: true, new: true }
+    )
+      .then((thought) =>
+        !thought
+          ? res.status(404).json({ message: "No Thought Found" })
+          : res.json(thought)
+      )
+      .catch((err) => res.status(500).json(err));
   },
 };
