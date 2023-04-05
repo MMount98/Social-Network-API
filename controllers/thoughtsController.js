@@ -76,7 +76,7 @@ module.exports = {
       )
       .catch((err) => res.json(err));
   },
-  //removes Reaction from Thought
+  //removes Reaction by reactionId from Thought
   removeReaction(req, res) {
     Thought.findByIdAndUpdate(
       { _id: req.params.thoughtId },
