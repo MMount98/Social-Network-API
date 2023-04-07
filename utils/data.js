@@ -76,7 +76,6 @@ const buildRandomUser = (int) => {
     results.push({
       username: userNames[i],
       email: emails[i],
-      thoughts: getRandomThought(2),
     });
   }
   return results;

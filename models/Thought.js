@@ -13,12 +13,10 @@ const thoughtSchema = new Schema(
 
     createdAt: {
       type: Date,
-      default: Date.toString("en-us", {
-        weekday: "long",
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-      }),
+      default: Date,
+      get: (date) => {
+        if (date) return date.toString().split("G")[0];
+      },
     },
 
     username: {
@@ -40,6 +38,10 @@ const thoughtSchema = new Schema(
 thoughtSchema.virtual("reactionCount").get(function () {
   return this.reactions.length;
 });
+
+// thoughtSchema.virtual("convertDat").get(function () {
+//   return { $toDate: String(this.createdAt) };
+// });
 
 //Initialize Thought
 const Thought = model("thought", thoughtSchema);

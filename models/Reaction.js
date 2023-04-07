@@ -18,12 +18,10 @@ const reactionSchema = new Schema(
     },
     createdAt: {
       type: Date,
-      default: Date.toString("en-us", {
-        weekday: "long",
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-      }),
+      default: Date,
+      get: (date) => {
+        if (date) return date.toString().split("G")[0];
+      },
     },
   },
   {
