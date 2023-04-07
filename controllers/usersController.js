@@ -14,7 +14,7 @@ module.exports = {
       .then((user) =>
         !user
           ? res.status(404).json({ message: "No user found" })
-          : User.deleteMany({ thoughts: req.params.userId })
+          : res.json(user)
       )
       .catch((err) => res.status(500).json(err));
   },
