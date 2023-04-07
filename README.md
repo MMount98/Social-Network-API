@@ -6,6 +6,8 @@
 
 This CLI application is built using a mongoDB and stores post(thoughts) from users and comments(reactions) to a post. It is a fully built backend application that can be added to any social media platform! It allows for Users to add Friends and build up a social following around what they think and feel!
 
+[Link to WalkThorugh Video](https://drive.google.com/file/d/15We-SWZftGXvDedMR6JHQoFvqYpMbNYc/view)
+
 ![get all Users](./assets/images/Get-users.png)
 
 # Table of Contents
